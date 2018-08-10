@@ -51,7 +51,7 @@
 							{% endif %}
 								<div class="card" id="{{ post.title }}">
 									<a href="post/{{ post.title }}" title="{{ post.title }}">
-										<img class="card-img-top post-image" src="http://127.0.0.1:8000/{{ post.get_banner_url }}" alt="Card image cap">				
+										<img class="card-img-top post-image" src="{{request.build_absolute_uri}}{{ post.get_banner_url }}" alt="Card image cap">				
 									</a>
 									<div class="card-body">
 										<h5 class="card-title">{{ post.title }}</h5>
