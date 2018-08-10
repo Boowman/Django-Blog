@@ -1,0 +1,7 @@
+{% if posts.count > 0 %}
+    {% for post in posts %}
+        <a class="dropdown-item pl-2" href="/post/{{post.title}}" style="overflow: hidden">{{post.title}}</a>
+    {% endfor %}
+{% else %}
+    <span class="dropdown-item pl-2">Nothing to see here!</span>
+{%endif %}

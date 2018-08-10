@@ -1,0 +1,9 @@
+{% extends "../index.html" %}
+{% block content %}
+	<h1>Searching...</h1>
+	{% for post in posts %}
+		<h1>{{ post.title }} - {{ post.author }}</h1>
+		<p>{{ post.headerTitle }}</p>
+		<p>{{ post.content }}</p>
+	{% endfor %}
+{% endblock %}

@@ -1,0 +1,88 @@
+<div class="container">
+	<div class="row align-items-center">
+		<!--Most Recent Post-->  
+		{% if liked_posts|length == 1 %}
+			<div class="col-md-12">
+		{% elif liked_posts|length == 2 %}
+			<div class="col-md-6">
+		{% elif liked_posts|length == 3 %}
+			<div class="col-md-8">
+		{% endif %}
+			{% for like_p in liked_posts %}
+				{% if forloop.counter == 1 %}
+					<a href="post/{{ like_p.title }}" alt="Most Recent Post">
+						<div class="d-flex align-items-baseline">
+							<div class="card bg-dark text-white border-success">
+								<img class="card-img" src="{{ like_p.get_banner_url }}" alt="Card image">
+								<div class="card-img-overlay my-4 recent" name="First">
+									<h5 class="card-title">{{ like_p.title }}</h5>
+									<small class="card-text text-light float-right" style="margin-top: 0px">
+										{{ like_p.get_comments_count }} Comments
+									</small>								
+									<small class="card-text text-light float-right mr-2" style="margin-top: 0px">
+										{{ like_p.get_likes_count }} Likes
+									</small>
+									<p class="card-text">{{ like_p.get_date }}</p>
+								</div>
+							</div>
+						</div>
+					</a>
+				{% endif %}
+			{% endfor %}
+		</div>
+		{% if liked_posts|length == 2 %}
+			<div class="col-md-6">
+		{% elif liked_posts|length == 3 %}
+			<div class="col-md-4">
+		{% endif %}
+			<!--Second Most Recent Post-->
+			<div class="row">
+				{% for like_p in liked_posts %}
+					{% if forloop.counter == 2 %}
+						<a href="post/{{ like_p.title }}" alt="Most Recent Post">
+							<div class="col my-2" style="z-index: -99 !important">
+								<div class="card bg-dark text-white border-info">
+									<img class="card-img" src="{{ like_p.get_banner_url }}" alt="Card image">
+									<div class="card-img-overlay my-4 recent" name="Second">
+										<h5 class="card-title">{{ like_p.get_short_title }}</h5>
+										<small class="card-text text-light float-right" style="margin-top: 0px">
+										{{ like_p.get_comments_count }} Comments
+										</small>								
+										<small class="card-text text-light float-right mr-2" style="margin-top: 0px">
+											{{ like_p.get_likes_count }} Likes
+										</small>
+										<p class="card-text">{{ like_p.get_date }}</p>										
+									</div>
+								</div>
+							</div>
+						</a>
+					{% endif %}
+				{% endfor %}
+			</div>
+			<!--Third Recent Post-->
+			<div class="row">
+				{% for like_p in liked_posts %}
+					{% if forloop.counter == 3 %}			
+						<a href="post/{{ like_p.title }}" alt="Most Recent Post">
+							<div class="col my-2" style="z-index: -99 !important">
+								<div class="card bg-dark text-white border-danger">
+									<img class="card-img" src="{{ like_p.get_banner_url }}" alt="Card image">
+									<div class="card-img-overlay my-4 recent" name="Third">
+										<h5 class="card-title">{{ like_p.get_short_title }}</h5>
+										<small class="text-light float-right" style="margin-top: 0px">
+										{{ like_p.get_comments_count }} Comments
+										</small>								
+										<small class="text-light float-right mr-2" style="margin-top: 0px">
+											{{ like_p.get_likes_count }} Likes
+										</small>
+										<p class="card-text">{{ like_p.get_date }}</p>
+									</div>
+								</div>
+							</div>
+						</a>
+					{% endif %}
+				{% endfor %}						
+			</div>
+		</div>
+	</div>
+</div>
