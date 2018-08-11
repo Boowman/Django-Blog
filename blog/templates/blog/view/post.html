@@ -47,11 +47,13 @@
             <div class="col-md-9">
 				<div id="post-info" class="shadow p-3 mb-5 bg-white rounded">
 					<p class="text-left font-weight-bold mt-4" style="font-size: 35px">{{ post.title }}</p>
-					<p class="text-left"><a href="../author/{{ post.author }}" class="text-info"><strong>{{ post.author }}</strong></a>, {{ post.get_full_date }}</p>			
-					{% for category in post.get_categories %}
-						<a href="../category/{{category}}" class="btn btn-outline-dark mt-5">{{category}}</a>
-					{% endfor %}
-					<hr class="mt-5">
+					<p class="text-left"><a href="../author/{{ post.author }}" class="text-info"><strong>{{ post.author }}</strong></a>, {{ post.get_full_date }}</p>	
+					<div class="mt-3">
+						{% for category in post.get_categories %}
+							<a href="../category/{{category}}" class="btn btn-outline-dark mt-2">{{category}}</a>
+						{% endfor %}
+					</div>
+					<hr class="mt-4 mb-4">
 					<p style="border-left: 10px solid #343a40; font-size: 1.2em !important; font-weight: 500 !important; line-height: 1.5em; padding-left: 30px; margin: 0 0 30px 0 !important;">
 						{{ post.headerTitle|safe }}
 					</p>
