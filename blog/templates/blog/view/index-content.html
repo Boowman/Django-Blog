@@ -1,10 +1,15 @@
 {% extends "../index.html" %}
 {% block content %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
 <script>
-	getClientIP = function(obj){
-		user_ip = obj.ip;
-	}
+getClientIP = function(obj){
+	user_ip = obj.ip;
+}
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
 </script>
 <script type="text/javascript" src="http://jsonip.com/getClientIP"></script>
 
@@ -38,7 +43,6 @@
 <!--Start Listing all the posts-->
 <p></p>
 <div class="w-100 bg-light pb-5" id="posts-view">
-	<p id="myIp"></p>
     <div class="container">
         <div class="row">
 			<!--Start Listing The Posts-->
@@ -51,7 +55,7 @@
 							{% endif %}
 								<div class="card" id="{{ post.title }}">
 									<a href="post/{{ post.title }}" title="{{ post.title }}">
-										<img class="card-img-top post-image" src="{{request.build_absolute_uri}}{{ post.get_banner_url }}" alt="Card image cap">				
+										<img class="card-img-top post-image" src="http://{{ request.get_host }}/{{ post.get_banner_url }}" alt="Card image cap">				
 									</a>
 									<div class="card-body">
 										<h5 class="card-title">{{ post.title }}</h5>
@@ -65,19 +69,14 @@
 										</footer>
 									</blockquote>         
 									<div class="card-footer">
-										<div class="float-left ml-4"><small class="text-muted mt-0">{{ post.get_date }}</small></div>
-										<div class="float-right">
-											<a href="post/{{ post.title }}#comments" class="comment-link text-muted float-right mr-4">
-												<img width="20px" style="margin-top: 0px"
-												src="../../../static/blog/images/post/comment-normal.png" 
-												onmouseover="this.src='../../../static/blog/images/post/comment-hover.png'" 
-												onmouseout="this.src='../../../static/blog/images/post/comment-normal.png'" title="View Comments"/>
-												<small>{{ post.get_comments_count }}</small>
-											</a>
-										</div>										
-										<div class="float-right" id="like-btn-{{post.id}}" onclick="likePost(this)" data-post-id="{{post.id}}">
-											{% include '../include/post_likes.html'%}
-										</div>									 
+										<div class="float-left"><small class="text-muted mt-0">{{ post.get_date }}</small></div>
+										<div class="custom-tooltip float-right"data-toggle="tooltip" data-placement="top" title="View Comment{{post.get_comments_count|pluralize}}">
+											{% include '../include/post_comments.html' %}
+										</div>									
+										<div class="custom-tooltip float-right like-btn mr-5" id="like-btn-{{post.id}}" onclick="like_post(this, true)" data-post-id="{{post.id}}" data-toggle="tooltip" data-placement="top" title="Like">		
+											{% include '../include/post_likes.html' %}
+										</div>	
+										
 									</div>
 								</div>
 							{% if forloop.counter|divisibleby:2 == 1 or posts|length == 1 or posts|length == forloop.counter%}

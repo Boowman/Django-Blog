@@ -21,7 +21,7 @@
 </script>
 <body>
 <!--Start Website Background-->
-<img id="background" src="http://127.0.0.1:8000/{{ post.get_banner_url }}" alt="Background Image">
+<img id="background" src="http://{{ request.get_host }}/{{ post.get_banner_url }}" alt="Background Image">
 <!--End Website Background-->
 <!--Start Website Header and Most Recent-->
 <div id="top-view">

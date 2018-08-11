@@ -16,13 +16,19 @@ $(function(){
 			dataType: 'html'
 		});
 	});
+
+	var likes = document.getElementsByClassName('like-btn');
+	
+	for(var i = 0; i < likes.length; i++){
+	   likes.item(i).click = new function() { like_post(likes.item(i), false) };	
+	}
 });
 
 function searchSuccess(data, textStatus, jqXHR){
 	$('#search-results').html(data);
 }
 
-function likePost(post) {
+function like_post(post, bool) {
     var post_id = post.getAttribute('data-post-id');
 	
 	$.ajax({
@@ -31,6 +37,7 @@ function likePost(post) {
 		data: {
 			'post_id': post_id,
 			'user_ip': user_ip,
+			'update': bool,
 			'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
 		},
 		success: function(data, textStatus, jqXHR){

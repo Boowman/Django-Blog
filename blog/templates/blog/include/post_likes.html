@@ -1,16 +1,4 @@
-<a class="comment-link text-muted float-right mr-4">											
-	<img width="20px" style="margin-top: 0px" 
-	{% for liked in post.get_liked %}
-		{% if '77.99.244.129' in liked %}												
-			src="../../../static/blog/images/post/like-hover.png" 
-			onmouseover="this.src='../../../static/blog/images/post/like-normal.png'" 
-			onmouseout="this.src='../../../static/blog/images/post/like-hover.png'" title="Like Post"
-		{% else %}
-			src="../../../static/blog/images/post/like-normal.png" 
-			onmouseover="this.src='../../../static/blog/images/post/like-hover.png'" 
-			onmouseout="this.src='../../../static/blog/images/post/like-normal.png'" title="Like Post"
-		{% endif %}
-	{% endfor %}
-	/>
-	<small>{{ post.get_likes_count }}</small>
+<a id="resize" class="button-link {% if liked_post %} active {% endif %} text-muted float-right">	  
+	<div class="float-left" name="LikeBTN"></div>
+	<small class="float-left ml-2" style="position: absolute; top: 0; left: 0;">{{ post.get_likes_count }}</small>
 </a>

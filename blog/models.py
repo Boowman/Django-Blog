@@ -4,7 +4,7 @@ class Post(models.Model):
     title           = models.CharField(max_length = 60)
     headerTitle     = models.CharField(max_length = 300)
     author          = models.CharField(max_length = 30)
-    bannerURL       = models.ImageField(upload_to = 'blog/static/blog/images/banner_url')
+    bannerURL       = models.ImageField(upload_to = 'blog/static/blog/images/banner_url/')
     categories      = models.CharField(max_length = 60)
     content         = models.TextField()
     date            = models.DateTimeField()
@@ -48,19 +48,19 @@ class Post(models.Model):
 
     def get_facebook_share(self):
         shareTitle = self.title.replace(' ', '%2520')
-        return "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fdeniszpop.co.uk%2Fpost%2F" + shareTitle
+        return "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fboowman.pythonanywhere.com%2Fpost%2F" + shareTitle
 
     def get_twitter_share(self):
         shareTitle = self.title.replace(' ', '%2520')
-        return "https://twitter.com/intent/tweet?url=http%3A%2F%2Fdeniszpop.co.uk%2Fpost%2F" + shareTitle + "&text="
+        return "https://twitter.com/intent/tweet?url=http%3A%2F%2Fboowman.pythonanywhere.com%2Fpost%2F" + shareTitle + "&text="
 
     def get_linkedin_share(self):
         shareTitle = self.title.replace(' ', '%2520')
-        return "http://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Fdeniszpop.co.uk%2Fpost%2F" + shareTitle + "&title="
+        return "http://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Fboowman.pythonanywhere.com%2Fpost%2F" + shareTitle + "&title="
 
     def get_googlep_share(self):
         shareTitle = self.title.replace(' ', '%2520')
-        return "https://plus.google.com/share?url=http%3A%2F%2Fdeniszpop.co.uk%2Fpost%2F" + shareTitle
+        return "https://plus.google.com/share?url=http%3A%2F%2Fboowman.pythonanywhere.com%2Fpost%2F" + shareTitle
 
 
 class Comment(models.Model):

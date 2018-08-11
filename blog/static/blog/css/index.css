@@ -19,6 +19,14 @@ body {
     z-index: -99;
 }
 
+.tooltip .tooltip-inner {
+	background-color: #000000ad !important;
+}
+
+.bs-tooltip-top .arrow::before, .bs-tooltip-auto[x-placement^="top"] .arrow::before {
+	border-top-color: #000000ad !important;
+}
+
 .d-block{
     width: 80%;
 }
@@ -27,6 +35,111 @@ body {
 	color: #00bcd4;
 }
 
+
+/*
+	Start Like/Comment Button CSS
+*/
+#resize{
+	width: auto !important;
+	height: 20px !important;
+}
+
+.button-link{
+	position: relative;
+	cursor: pointer;
+}
+
+.button-link:hover{
+	text-decoration: none;	
+    color: #17a2b8 !important;
+}
+
+.card-footer{
+	height: 50px;
+}
+
+.button-link div[name='LikeBTN']{
+	position: absolute; 
+	top: 0; 
+	left: 0;
+	background-image: url('../../../static/blog/images/post/web_heart_animation_edge.png');
+	background-repeat: no-repeat;
+	background-size: cover;
+	width: 60px;
+    height: 60px;
+	transform: translate(30%,-42%);
+	
+	/* For the image not active*/
+	margin-top: 5px;
+	margin-left: -55px;
+}
+
+.active div[name='LikeBTN']{
+	margin-top: 5px;
+	
+    -webkit-animation: play .8s steps(28) forwards;
+    -moz-animation: play .8s steps(29) infinite;
+    -ms-animation: play .8s steps(29) infinite;
+    -o-animation: play .8s steps(29) infinite;
+    animation: play .8s steps(28) forwards;
+}
+
+/* Comment */
+.button-link div[name='CommentBTN']{
+	background-image: url('../../../static/blog/images/post/comment-normal.png');
+	background-repeat: no-repeat;
+	background-size: contain;
+	height: 20px;
+    width: 20px;
+}
+
+.active div[name='CommentBTN']{
+	background-image: url('../../../static/blog/images/post/comment-hover.png');
+}
+
+.button-link:hover div[name='CommentBTN']{
+	background-image: url('../../../static/blog/images/post/comment-hover.png');
+}
+
+/* Animations */
+.clicked{  
+	margin-top: -15px;
+	
+    -webkit-animation: play .8s steps(28) forwards;
+    -moz-animation: play .8s steps(29) infinite;
+    -ms-animation: play .8s steps(29) infinite;
+    -o-animation: play .8s steps(29) infinite;
+    animation: play .8s steps(28) forwards;
+}
+
+@-webkit-keyframes play {
+   from { background-position:    0px; }
+     to { background-position: -1680px; }
+}
+
+@-moz-keyframes play {
+   from { background-position:    0px; }
+     to { background-position: -1680px; }
+}
+
+@-ms-keyframes play {
+   from { background-position:    0px; }
+     to { background-position: -1680px; }
+}
+
+@-o-keyframes play {
+   from { background-position:    0px; }
+     to { background-position: -1680px; }
+}
+
+@keyframes play {
+   from { background-position:    0px; }
+     to { background-position: -1680px; }
+}
+
+/*
+	End Like Button CSS
+*/
 .card-img-overlay.recent{
     position: absolute; 
 
@@ -96,6 +209,16 @@ a:hover .card-img-overlay[name="Third"]{
 	height: 128px;
 }
 
+.text-warning a:hover{
+    color: #ffd760 !important;
+    text-decoration: none !important;
+}
+
+#recent-posts{
+	margin-top: 0px;
+}
+
+
 @media screen and (max-width:767px){
     #scroll-to-posts{
         display: none;
@@ -164,24 +287,6 @@ a:hover .card-img-overlay[name="Third"]{
     .title-container{
         text-align: right !important;
     }
-}
-
-.comment-link{
-	cursor: pointer;
-}
-
-.comment-link:hover{
-	text-decoration: none;	
-    color: #17a2b8 !important;
-}
-
-.text-warning a:hover{
-    color: #ffd760 !important;
-    text-decoration: none !important;
-}
-
-#recent-posts{
-	margin-top: 0px;
 }
 
 @media (max-height: 823px){

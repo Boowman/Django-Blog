@@ -1,5 +1,3 @@
-from webbrowser import get
-
 from django.shortcuts import render, render_to_response
 from django.utils import timezone
 from blog.models import Post, Comment
@@ -7,7 +5,7 @@ from blog.models import Post, Comment
 
 def viewIndex(request):
     most_liked = Post.objects.filter(likes__gte = 1).order_by('-likes')[:3]
-    posts_list = Post.objects.filter(date__lte = timezone.now()).order_by('-date')[:5]
+    posts_list = Post.objects.filter(date__lte = timezone.now()).order_by('-date')[:100]
     posts = []
 
     if request.method == 'GET':
@@ -120,22 +118,34 @@ def like_post(request):
     if request.method == 'POST':
         post_id = request.POST['post_id']
         user_ip = request.POST['user_ip']
+        update  = request.POST['update']
     else:
-        post_id = 0
-        user_ip = 0
+        post_id = -1
+        user_ip = -1
+        update  = -1
 
     post = Post.objects.get(id = post_id)
+    liked_post = False
 
     if user_ip in post.get_liked():
-        # Since we can't manipulate the string itself we need to store it in a
-        # temp variable and re assign it
-        new_liked = post.liked.replace(user_ip + ',', '')
-        post.liked = new_liked
-
-        post.update_likes(-1)
+        if update == 'true':
+            # Since we can't manipulate the string itself we need to store it in a
+            # temp variable and re assign it
+            new_liked = post.liked.replace(user_ip + ',', '')
+            post.liked = new_liked
+            post.update_likes(-1)
+            liked_post = False
+        else:
+            liked_post = True
     else:
-        post.liked += user_ip + ","
-        post.update_likes(1)
+        if update == 'true':
+            post.liked += user_ip + ","
+            post.update_likes(1)
+            liked_post = True
+        else:
+            liked_post = False
 
-    post.save()
-    return render_to_response('blog/include/post_likes.html', {'post': post, })
+    if update == 'true':
+        post.save()
+
+    return render_to_response('blog/include/post_likes.html', {'post': post, 'liked_post': liked_post, 'user_ip': user_ip, })
