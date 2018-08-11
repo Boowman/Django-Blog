@@ -4,7 +4,7 @@ class Post(models.Model):
     title           = models.CharField(max_length = 60)
     headerTitle     = models.CharField(max_length = 300)
     author          = models.CharField(max_length = 30)
-    bannerURL       = models.ImageField(upload_to = 'blog/static/blog/images/banner_url/')
+    bannerURL       = models.ImageField(upload_to = 'Django-Blog/blog/static/blog/images/banner_url/')
     categories      = models.CharField(max_length = 60)
     content         = models.TextField()
     date            = models.DateTimeField()
@@ -29,7 +29,7 @@ class Post(models.Model):
         return self.date.strftime("%m %b %Y, %H:%M %p")
 
     def get_banner_url(self):
-        new_url = self.bannerURL.url.replace('blog/s', 's')
+        new_url = self.bannerURL.url.replace('Django-Blog/blog/s', 's')
         return new_url
 
     def get_liked(self):
