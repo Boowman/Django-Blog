@@ -46,21 +46,31 @@ class Post(models.Model):
         self.likes += value
         return True
 
+    url = "boowman.pythonanywhere.com"
+
     def get_facebook_share(self):
         shareTitle = self.title.replace(' ', '%2520')
-        return "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fboowman.pythonanywhere.com%2Fpost%2F" + shareTitle
+        return "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F" + self.url + "%2Fpost%2F" + shareTitle + "&text=Found something awesome!!"
 
     def get_twitter_share(self):
         shareTitle = self.title.replace(' ', '%2520')
-        return "https://twitter.com/intent/tweet?url=http%3A%2F%2Fboowman.pythonanywhere.com%2Fpost%2F" + shareTitle + "&text="
+        return "https://twitter.com/intent/tweet?url=http%3A%2F%2F" + self.url + "%2Fpost%2F" + shareTitle + "&text=Found something awesome!!"
 
     def get_linkedin_share(self):
         shareTitle = self.title.replace(' ', '%2520')
-        return "http://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Fboowman.pythonanywhere.com%2Fpost%2F" + shareTitle + "&title="
+        return "http://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2F" + self.url + "%2Fpost%2F" + shareTitle + "&title=Found something awesome!!"
 
     def get_googlep_share(self):
         shareTitle = self.title.replace(' ', '%2520')
-        return "https://plus.google.com/share?url=http%3A%2F%2Fboowman.pythonanywhere.com%2Fpost%2F" + shareTitle
+        return "https://plus.google.com/share?url=http%3A%2F%2F" + self.url + "%2Fpost%2F" + shareTitle
+
+    def get_tumblr_share(self):
+        shareTitle = self.title.replace(' ', '%2520')
+        return "http://www.tumblr.com/share?v=3&u=http%3A%2F%2F" + self.url + "%2Fpost%2F" + shareTitle + "&t=Found something awesome!!"
+
+    def get_pinterest_share(self):
+        shareTitle = self.title.replace(' ', '%2520')
+        return "http://pinterest.com/pin/create/button/?url=http%3A%2F%2F" + self.url + "%2Fpost%2F" + shareTitle + "&media=&description=Found something awesome!!"
 
 
 class Comment(models.Model):
