@@ -16,16 +16,27 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="../../../static/blog/js/ajax.js"></script>
 </head>
-<script>
+<style>
+#navigation-bar{
+	width: 100%;
+	height: 75px;
+}
 
-</script>
+.header-logo{
+	width: 64px;
+	height: 64px;
+}
+
+</style>
 <body>
 <!--Start Website Background-->
 <img id="background" src="http://{{ request.get_host }}/{{ post.get_banner_url }}" alt="Background Image">
 <!--End Website Background-->
 <!--Start Website Header and Most Recent-->
 <div id="top-view">
-    {% include "../include/header.html" %}
+	<div id="navigation-bar" class="bg-light">
+		{% include "../include/header.html" %}
+	</div>
 </div>
 <!--End Website Header and Most Recent-->
 <!--Start Post Container-->
