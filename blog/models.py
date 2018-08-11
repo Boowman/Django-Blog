@@ -23,10 +23,10 @@ class Post(models.Model):
         return category
 
     def get_date(self):
-        return self.date.strftime("%m %b %Y")
+        return self.date.strftime("%b, %d %Y")
 
     def get_full_date(self):
-        return self.date.strftime("%m %b %Y, %H:%M %p")
+        return self.date.strftime("%b, %d %Y, %H:%M %p")
 
     def get_banner_url(self):
         new_url = self.bannerURL.url.replace('Django-Blog/blog/s', 's')
