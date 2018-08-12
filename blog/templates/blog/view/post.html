@@ -43,7 +43,11 @@
 		{% for rec_post in posts %}
 			{% if rec_post.title == post.title %}	
 				<li style="width: 33.33% !important; height: 38px" class="float-left">
-					<a href="/post/{{posts|previous:forloop.counter0}}" alt="Previous Post">
+					{% if forloop.first %}
+						<a href="/post/{{posts|last_element}}" alt="Next Post">
+					{% else %}
+						<a href="/post/{{posts|previous:forloop.counter0}}" alt="Previous Post">
+					{% endif %}
 						<button type="button" class="w-100 btn btn-outline-danger" style="border-radius: 0">Previous</button>
 					</a>
 				</li>
@@ -75,10 +79,10 @@
             <div class="col-md-9">
 				<div id="post-info" class="shadow p-3 mb-5 bg-white rounded">
 					<p class="text-left font-weight-bold mt-4" style="font-size: 35px">{{ post.title }}</p>
-					<p class="text-left"><a href="../author/{{ post.author }}" class="text-info"><strong>{{ post.author }}</strong></a>, {{ post.get_full_date }}</p>	
+					<p class="text-left"><a href="/author/{{ post.author }}/#posts-view" class="text-info"><strong>{{ post.author }}</strong></a>, {{ post.get_full_date }}</p>	
 					<div class="mt-3">
 						{% for category in post.get_categories %}
-							<a href="../category/{{category}}" class="btn btn-outline-dark mt-2">{{category}}</a>
+							<a href="/category/{{category}}/#posts-view" class="btn btn-outline-dark mt-2">{{category}}</a>
 						{% endfor %}
 					</div>
 					<hr class="mt-4 mb-4">

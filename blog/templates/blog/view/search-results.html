@@ -1,0 +1,87 @@
+{% extends "../index.html" %}
+{% block content %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+<style>
+.card:hover a[name=PostHeader] {
+	transform: scale(1.05);
+}
+</style>
+
+<div id="top-view">
+    <!--Start Header-->
+		{% include "../include/header.html" %}
+    <!--End Header-->
+    <!--Start Most Recent-->
+		{% include "../include/index/most-popular.html" %}
+    <!--End Most Recent-->
+</div>
+<!--End Website Header and Most Recent-->
+<!--Start Displaying the arrow at the top of the screen-->
+<div id="scroll-to-posts" class="container text-center">
+    <a href="#posts-view" id="scroll">
+        <div class="row">
+            <div class="col-12">
+                <span class="align-middle">Intrested in what I have to say, take a look below</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <svg id="i-chevron-bottom" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+					<path d="M30 12 L16 24 2 12" />
+                </svg>
+            </div>
+        </div>  
+    </a>    
+</div>
+<!--End Displaying the arrow at the top of the screen-->
+<!--Start Listing all the posts-->
+<p></p>
+<div class="w-100 bg-light pb-5" id="posts-view">
+    <div class="container">
+        <div class="row">
+			<!--Start Listing The Posts-->
+            <div class="col-md-8 pt-5">
+				{% if posts|length > 0 %}
+					{% for post in posts %}
+						<div class="card mb-3 w-100" style="border-color: rgba(0, 0, 0, 0.125)">
+							<div class="card-header">
+								<label class="mt-2">{{ post.title }}</label>
+								<a href="/post/{{post.title}}/" alt="{{ post.title }}"><button type="button" class="btn btn-outline-info float-right">Read More</button></a>
+							</div>
+							<div class="card-body text-dark">
+								<h5 class="card-title"><small class="text-muted">Posted by <cite title="Source Title"><a href="../author/{{ post.author }}" class="text-info ">{{ post.author }}</a></cite></small></h5>
+								<p class="card-text mt-3">{{ post.headerTitle|safe }}</p>
+							</div>
+						</div>
+					{% endfor %}
+				{% else %}
+					<div class="card mb-3 w-100" style="border-color: rgba(0, 0, 0, 0.125); text-align: center">
+						<p class="text-center mt-4"><h3 class="text-secondary">Search results for: <label class="text-info">{{search}}</label></h3></p>
+					</div>
+				{% endif %}
+            </div>
+			<!--End Listing The Posts-->
+            <!--Social Media-->
+			<div class="col-md-4 my-5">
+				<!--Github Widget-->
+				<div class="mb-2">
+					<div class="github-card" data-github="boowman" data-width="100%" data-height="auto" data-theme="medium"></div>
+					<script src="../../../static/blog/js/widget/github/widget.js"></script>
+				</div>
+				
+				<!--Spotify Widget-->
+				<div class="mb-2 card w-100">
+					<iframe style="margin-left: 5em; margin-top: 1em" src="https://open.spotify.com/follow/1/?uri=spotify:user:denisz.pop&size=detail&theme=light" width="210" height="75" scrolling="no" frameborder="0" style="border:none; overflow:hidden;" allowtransparency="true"></iframe>
+				</div>
+				
+				<!--Twitter Widget-->
+				<script type="text/javascript" src="https://feed.mikle.com/js/fw-loader.js" data-fw-param="87189/"></script>
+				
+				<!--Instagram Widget-->
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

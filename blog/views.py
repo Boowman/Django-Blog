@@ -26,16 +26,12 @@ def viewIndex(request):
                     post.save()
 
     # Passing an object list so the if will need to use .count than |length
-    return render(request, 'blog/view/index-content.html', {'posts': posts, 'liked_posts': most_liked})
+    return render(request, 'blog/view/posts.html', {'posts': posts, 'liked_posts': most_liked})
 
 
 def viewPost(request, title):
     post            = Post.objects.get(title = title)
     recent_posts    = Post.objects.filter(date__lte = timezone.now()).order_by('-date')[:10]
-    posts           = []
-
-    for p in recent_posts:
-        posts.append(p)
 
     comments        = Comment.objects.filter(post = post)
     reply_comment   = None
@@ -68,7 +64,7 @@ def viewPost(request, title):
                     reply_comment = comment
 
         # Passing an array so the if will need to use |length than count
-        return render(request, 'blog/view/post.html', {'post': post, 'posts': posts, 'comments': comments, 'reply_comment': reply_comment, })
+        return render(request, 'blog/view/post.html', {'post': post, 'posts': recent_posts, 'comments': comments, 'reply_comment': reply_comment, })
 
 
 def viewSearchCategory(request, search):
@@ -81,14 +77,14 @@ def viewSearchCategory(request, search):
                 posts.append(query)
 
     # Passing an array so the if will need to use |length than count
-    return render(request, 'blog/view/search.html', {'posts': posts, 'search': search, })
+    return render(request, 'blog/view/search-results.html', {'posts': posts, 'search': search, })
 
 
 def viewSearchAuthor(request, search):
     posts = Post.objects.filter(author = search).order_by('-date')
 
     # Passing an array so the if will need to use |length than count
-    return render(request, 'blog/view/search.html', {'posts': posts, 'search': search, })
+    return render(request, 'blog/view/search-results.html', {'posts': posts, 'search': search, })
 
 
 def viewSearch(request):
@@ -104,18 +100,24 @@ def viewSearch(request):
                 posts.append(post)
 
     # Passing an array so the if will need to use |length than count
-    return render(request, 'blog/view/search.html', {'posts': posts, 'search': search, })
+    return render(request, 'blog/view/search-results.html', {'posts': posts, 'search': search, })
 
 
 def search_titles(request):
+    query_set   = Post.objects.all().order_by('-date')
+    posts       = []
+    search      = None
+
     if request.method == 'POST':
-        search_text = request.POST['search_text']
-    else:
-        search_text = ''
+        search = request.POST['search_text']
 
-    posts = Post.objects.filter(title__contains = search_text)
+        for post in query_set:
+            if search in post.title or search in post.content or search in post.headerTitle or search in post.author:
+                posts.append(post)
 
-    return render_to_response('blog/include/ajax_search.html', {'posts': posts})
+    print(posts)
+
+    return render_to_response('blog/include/search-box.html', {'posts': posts})
 
 
 def like_post(request):
@@ -152,4 +154,4 @@ def like_post(request):
     if update == 'true':
         post.save()
 
-    return render_to_response('blog/include/post_likes.html', {'post': post, 'liked_post': liked_post, 'user_ip': user_ip, })
+    return render_to_response('blog/include/index/post/post_likes.html', {'post': post, 'liked_post': liked_post, 'user_ip': user_ip, })

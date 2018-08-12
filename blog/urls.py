@@ -3,9 +3,9 @@ from . import views
 
 urlpatterns = [
     path('',                        views.viewIndex,            name = 'index'),
-    path('post/<str:title>',        views.viewPost,             name = 'post'),
-    path('category/<str:search>',   views.viewSearchCategory,   name = 'categorySearch'),
-    path('author/<str:search>',     views.viewSearchAuthor,     name = 'authorSearch'),
+    path('post/<str:title>/',       views.viewPost,             name = 'post'),
+    path('category/<str:search>/',  views.viewSearchCategory,   name = 'categorySearch'),
+    path('author/<str:search>/',    views.viewSearchAuthor,     name = 'authorSearch'),
     path('search/',                 views.viewSearch,           name = 'search'),
 
     # ------------------------------------------- #

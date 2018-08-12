@@ -1,0 +1,106 @@
+{% extends "../index.html" %}
+{% block content %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script>
+getClientIP = function(obj){
+	user_ip = obj.ip;
+}
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+  
+     $('[data-toggle="tooltip"]').click(function () {
+	  $('[data-toggle="tooltip"]').tooltip("hide");
+   });
+})
+</script>
+<script type="text/javascript" src="http://jsonip.com/getClientIP"></script>
+<style>
+.card:hover a[name=PostHeader] {
+	transform: scale(1.05);
+}
+</style>
+
+<div id="top-view">
+    <!--Start Header-->
+		{% include "../include/header.html" %}
+    <!--End Header-->
+    <!--Start Most Recent-->
+		{% include "../include/index/most-popular.html" %}
+    <!--End Most Recent-->
+</div>
+<!--End Website Header and Most Recent-->
+<!--Start Displaying the arrow at the top of the screen-->
+<div id="scroll-to-posts" class="container text-center">
+    <a href="#posts-view" id="scroll">
+        <div class="row">
+            <div class="col-12">
+                <span class="align-middle">Intrested in what I have to say, take a look below</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <svg id="i-chevron-bottom" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                        <path d="M30 12 L16 24 2 12" />
+                </svg>
+            </div>
+        </div>  
+    </a>    
+</div>
+<!--End Displaying the arrow at the top of the screen-->
+<!--Start Listing all the posts-->
+<p></p>
+<div class="w-100 bg-light pb-5" id="posts-view">
+    <div class="container">
+        <div class="row">
+			<!--Start Listing The Posts-->
+            <div class="col-md-8">
+                <div class="row align-items-center">  
+					{% if posts|length > 0 %}
+						{% for post in posts %}
+							{% if forloop.counter|divisibleby:2 == 0 %}
+							<div class="card-deck mt-5">
+							{% endif %}
+								<div class="card" id="{{ post.title }}">
+									<a href="post/{{ post.title }}" title="{{ post.title }}" name="PostHeader">
+										<img class="card-img-top post-image" src="http://{{ request.get_host }}/{{ post.get_banner_url }}" alt="Card image cap">				
+									</a>
+									<div class="card-body">
+										<h5 class="card-title">{{ post.title }}</h5>
+										<p class="card-text">{{ post.headerTitle|safe }}</p>
+									</div>               
+									<blockquote class="blockquote mb-0 card-body align-bottom" style="vertical-align: bottom;">
+										<footer class="blockquote-footer">
+											<small class="text-muted">
+												Posted by <cite title="Source Title"><a href="/author/{{ post.author }}/#posts-view" class="text-info ">{{ post.author }}</a></cite>
+											</small>
+										</footer>
+									</blockquote>         
+									<div class="card-footer">
+										<div class="float-left"><small class="text-muted mt-0">{{ post.get_date }}</small></div>
+										<div class="custom-tooltip float-right"data-toggle="tooltip" data-placement="top" title="View Comment{{post.get_comments_count|pluralize}}">
+											{% include '../include/index/post/post_comments.html' %}
+										</div>									
+										<div class="custom-tooltip float-right like-btn mr-5" id="like-btn-{{post.id}}" onclick="like_post(this, true)" data-post-id="{{post.id}}" data-toggle="tooltip" data-placement="top" title="Like">		
+											{% include '../include/index/post/post_likes.html' %}
+										</div>	
+										
+									</div>
+								</div>
+							{% if forloop.counter|divisibleby:2 == 1 or posts|length == 1 or posts|length == forloop.counter%}
+							</div>
+							{% endif %}
+						{% endfor %}
+					{% else %}
+						<h1>No posts available!</h1>
+					{% endif %}
+                </div>
+            </div>
+			<!--End Listing The Posts-->
+            <!--Start Social Media-->
+				{% include "../include/social-media.html" %}
+			<!--End Social Media-->
+		</div>
+	</div>
+</div>
+{% endblock %}

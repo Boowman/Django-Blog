@@ -188,12 +188,12 @@ a:hover .card-img-overlay[name="Third"]{
 
 #scroll-to-posts a{
 	font-size: 25px; 
-	color: #ffffffad; 
+	color: #efefef; 
 	text-decoration: none;
 }
 
 #scroll-to-posts a:hover{
-	color: #ffd600; 
+	color: #dc3545; 
 }
 
 .title{
