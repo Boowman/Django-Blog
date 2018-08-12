@@ -4,7 +4,7 @@ class Post(models.Model):
     title           = models.CharField(max_length = 60)
     headerTitle     = models.CharField(max_length = 300)
     author          = models.CharField(max_length = 30)
-    bannerURL       = models.ImageField(upload_to = '/blog/static/blog/images/banner_url/')
+    bannerURL       = models.ImageField(upload_to = 'blog/static/blog/images/banner_url/')
     categories      = models.CharField(max_length = 60)
     content         = models.TextField()
     date            = models.DateTimeField()

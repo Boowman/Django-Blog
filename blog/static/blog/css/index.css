@@ -294,9 +294,20 @@ a:hover .card-img-overlay[name="Third"]{
 		margin-top: -30px;
 		margin-bottom: 0px;
 	}
+}
+
+@media (max-height: 777px){
+	.header-logo{
+		width: 64px;
+		height: 64px;
+	}
 	
-	.form-inline{
-		margin-top: -20px;
+	#navbarSupportedContent{
+		margin-top: 25px;
+	}
+	
+	.col-md-12 {
+		margin-top: -95px;
 	}
 }
 

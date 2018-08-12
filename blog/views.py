@@ -32,6 +32,10 @@ def viewIndex(request):
 def viewPost(request, title):
     post            = Post.objects.get(title = title)
     recent_posts    = Post.objects.filter(date__lte = timezone.now()).order_by('-date')[:10]
+    posts           = []
+
+    for p in recent_posts:
+        posts.append(p)
 
     comments        = Comment.objects.filter(post = post)
     reply_comment   = None
@@ -64,7 +68,7 @@ def viewPost(request, title):
                     reply_comment = comment
 
         # Passing an array so the if will need to use |length than count
-        return render(request, 'blog/view/post.html', {'post': post, 'posts': recent_posts, 'comments': comments, 'reply_comment': reply_comment, })
+        return render(request, 'blog/view/post.html', {'post': post, 'posts': posts, 'comments': comments, 'reply_comment': reply_comment, })
 
 
 def viewSearchCategory(request, search):

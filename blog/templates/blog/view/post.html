@@ -1,4 +1,5 @@
 {% block content %}
+{% load post_extras %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,9 +34,45 @@
 <img id="background" src="http://{{ request.get_host }}/{{ post.get_banner_url }}" alt="Background Image">
 <!--End Website Background-->
 <!--Start Website Header and Most Recent-->
-<div id="top-view">
+<div id="top-view" style="position: relative">
 	<div id="navigation-bar" class="bg-light">
 		{% include "../include/header.html" %}
+	</div>
+	<div class="w-100" style="position: absolute; top: 0; left: 0; right: 0; margin-top: 75px" height="50px">
+		<ul class="w-100" style="list-style: none; margin: 0 auto !important; padding: 0 !important; height: 38px; background-color: #00000087">
+		{% for rec_post in posts %}
+			{% if rec_post.title == post.title %}
+				{% with next_rec_post=posts|next:forloop.counter0 %}
+				{% with previous_rec_post=posts|previous:forloop.counter0 %}
+					<li style="width: 33.33% !important; height: 38px" class="float-left">
+						{% if forloop.counter == 1 %}
+							<a href="/post/{{posts.last.title}}" alt="Next Post">
+						{% else %}
+							<a href="/post/{{next_rec_post}}" alt="Next Post">
+						{% endif %}
+						<a href="/post/{{previous_rec_post}}" alt="Previous Post">
+							<button type="button" class="w-100 btn btn-outline-danger" style="border-radius: 0">Previous</button>
+						</a>
+					</li>
+					<li style="width: 33.33% !important; height: 38px" class="float-left">
+						<a href="/" alt="Index">
+						<button type="button" class="w-100 btn btn-outline-danger" style="border-radius: 0">Home</button>
+						</a>
+					</li>
+					<li style="width: 33.33% !important; height: 38px" class="float-left">
+						{% if forloop.last %}
+							<a href="/post/{{posts.0}}" alt="Next Post">
+						{% else %}
+							<a href="/post/{{next_rec_post}}" alt="Next Post">
+						{% endif %}
+							<button type="button" class="w-100 btn btn-outline-danger" style="border-radius: 0">Next</button>
+						</a>
+					</li>
+				{% endwith %}
+				{% endwith %}
+			{% endif %}
+		{% endfor %}
+		</ul>
 	</div>
 </div>
 <!--End Website Header and Most Recent-->

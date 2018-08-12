@@ -22,7 +22,6 @@ body {
 
 #top-view{
     height: 75vh;
-    z-index: -99;
 }
 
 .title{
@@ -102,45 +101,26 @@ body {
     }
 }
 
-
-@media (max-height: 823px){
-	.navbar-collapse {
-		margin-top: -30px;
-		margin-bottom: 0px;
-	}
-	
-	.form-inline{
+@media (max-width: 416px) {
+	#recent-posts {
 		margin-top: -20px;
 	}
-}
-
-@media (max-width: 375px){
-	.navbar-collapse {
-		margin-top: -30px;
-		margin-bottom: 0px;
+		
+	.nav-link{
+		width: 50px;
 	}
 	
 	.navbar-collapse ul {
 		margin-left: -25px;
 	}
-	
-	.form-inline{
-		margin-top: -20px;
-	}
-	
-	.nav-link{
-		width: 50px;
-	}
-}
-
-@media (max-height: 550px) {
-    #recent-posts {
-		margin-top: -20px;
-	}
-	
+		
 	.navbar-collapse {
-		margin-top: -30px;
+		margin-top: 10px;
 		margin-bottom: 20px;
+	}
+			
+	.form-inline {
+		margin-top: -20px;
 	}
 }
 
