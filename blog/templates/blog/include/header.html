@@ -1,10 +1,11 @@
+{% with index_path="../../" post_path="../../../../" %}
 <div class="container" id="header">
 	<div class="mx-auto text-center title-container">
 		<a href="/" class="navbar-brand" style="color: #ffffff">
 			{% if 'post' in request.path %}
-				<img src="../../static/blog/images/bg/logo-dark.png" class="header-logo">
+				<img src="{{post_path}}static/blog/images/bg/logo-dark.png" class="header-logo">
 			{% else %}
-				<img src="../../static/blog/images/bg/logo.png" class="header-logo">
+				<img src="{{index_path}}static/blog/images/bg/logo.png" class="header-logo">
 			{% endif %}
 		</a>
 	</div>
@@ -15,22 +16,50 @@
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar mr-auto" name="social-list">
 				<li class="nav-item d-inline" style="margin-top: 15px">
-					<a class="nav-link" href="https://www.facebook.com/denisz.pop" alt="Facebook" target="_blank"><img width="40px" src="../../static/blog/images/social/facebook.png" title="Facebook"/></a>     
+					<a class="nav-link" href="https://www.facebook.com/denisz.pop" alt="Facebook" target="_blank"><img width="40px" 
+					{% if 'post' in request.path %}
+						src="{{post_path}}static/blog/images/social/facebook.png"
+					{% else %}
+						src="{{index_path}}static/blog/images/social/facebook.png" 
+					{% endif %}					
+						title="Facebook"/>
+					</a>     
 				</li>
 				<li class="nav-item d-inline" style="margin-top: 15px">
-					<a class="nav-link" href="https://twitter.com/Boowman123" alt="Twitter" target="_blank"><img width="40px" src="../../static/blog/images/social/twitter.png" title="Twitter"/></a>
+					<a class="nav-link" href="https://twitter.com/Boowman123" alt="Twitter" target="_blank"><img width="40px" 
+					{% if 'post' in request.path %}
+						src="{{post_path}}static/blog/images/social/twitter.png"
+					{% else %}
+						src="{{index_path}}static/blog/images/social/twitter.png" 
+					{% endif %}										
+						title="Twitter"/>
+					</a>
 				</li>
 				<li class="nav-item d-inline" style="margin-top: 15px">
-					<a class="nav-link" href="https://github.com/Boowman/" alt="Github" target="_blank"><img width="40px" src="../../static/blog/images/social/github.png" title="Github"/></a>
+					<a class="nav-link" href="https://github.com/Boowman/" alt="Github" target="_blank"><img width="40px" 
+					{% if 'post' in request.path %}
+						src="{{post_path}}static/blog/images/social/github.png"
+					{% else %}
+						src="{{index_path}}static/blog/images/social/github.png" 
+					{% endif %}	 
+						title="Github"/>
+					</a>
 				</li>
 				<li class="nav-item d-inline" style="margin-top: 15px">
-						<a class="nav-link" href="https://www.instagram.com/boowman/" alt="Instagram" target="_blank"><img width="40px" src="../../static/blog/images/social/instagram.png" title="Instagram"/></a>
+					<a class="nav-link" href="https://www.instagram.com/boowman/" alt="Instagram" target="_blank"><img width="40px" 
+					{% if 'post' in request.path %}
+						src="{{post_path}}static/blog/images/social/instagram.png"
+					{% else %}
+						src="{{index_path}}static/blog/images/social/instagram.png" 
+					{% endif %}	
+						title="Instagram"/>
+					</a>
 				</li> 
 			</ul>
 			<form action="/search/#posts-view" class="form-inline" method="post" autocomplete="off">
 				{% csrf_token %}
 				<div class="dropdown">
-					<input class="form-control" onfocus="showSearchResults()" unfocus type="search" placeholder="Search" aria-label="Search" id="search" name="search">
+					<input class="form-control" type="search" placeholder="Search" aria-label="Search" id="search" name="search"/>
 					<div class="dropdown-menu" id="search-results">
 						
 					</div>
@@ -40,3 +69,4 @@
 		</div>
 	</nav>
 </div>
+{% endwith %}

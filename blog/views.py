@@ -4,7 +4,7 @@ from blog.models import Post, Comment
 
 
 def viewIndex(request):
-    most_liked = Post.objects.filter(likes__gte = 1).order_by('-likes')[:3]
+    liked_posts = Post.objects.filter(likes__gte = 1).order_by('-likes')[:3]
     posts_list = Post.objects.filter(date__lte = timezone.now()).order_by('-date')[:100]
     posts = []
 
@@ -12,7 +12,7 @@ def viewIndex(request):
         for post in posts_list:
             posts.append(post)
 
-        for liked in most_liked:
+        for liked in liked_posts:
             for post in posts:
                 if liked.title == post.title:
                     posts.remove(post)
@@ -26,22 +26,20 @@ def viewIndex(request):
                     post.save()
 
     # Passing an object list so the if will need to use .count than |length
-    return render(request, 'blog/view/posts.html', {'posts': posts, 'liked_posts': most_liked})
+    return render(request, 'blog/view/posts.html', {'posts': posts, 'liked_posts': liked_posts})
 
+def viewPost(request, year, month, title):
+    post = Post.objects.get(title = title)
+    recent_posts = Post.objects.filter(date__lte = timezone.now()).order_by('-date')[:10]
 
-def viewPost(request, title):
-    post            = Post.objects.get(title = title)
-    recent_posts    = Post.objects.filter(date__lte = timezone.now()).order_by('-date')[:10]
-
-    comments        = Comment.objects.filter(post = post)
-    reply_comment   = None
+    comments = Comment.objects.filter(post = post)
+    reply_comment = None
 
     if request.method == 'POST':
-        print("Post Method")
-        username    = request.POST['username']
-        email       = request.POST['email']
-        message     = request.POST['message']
-        reply_id    = -1
+        username = request.POST['username']
+        email = request.POST['email']
+        message = request.POST['message']
+        reply_id = -1
 
         if request.POST['reply_comment'] != "":
             reply_id = request.POST['reply_comment']
@@ -54,8 +52,6 @@ def viewPost(request, title):
 
         return render(request, 'blog/view/post.html', {'post': post, 'posts': recent_posts, 'comments': comments, })
     else:
-        print("Get Method")
-
         reply_id = request.GET.get('replyTo', None)
 
         if reply_id is not None:
@@ -88,9 +84,11 @@ def viewSearchAuthor(request, search):
 
 
 def viewSearch(request):
-    query_set = Post.objects.all().order_by('-date')
-    posts = []
-    search = None
+    liked_posts = Post.objects.filter(likes__gte = 1).order_by('-likes')[:3]
+    query_set   = Post.objects.all().order_by('-date')
+    
+    posts   = []
+    search  = None
 
     if request.method == 'POST':
         search = request.POST['search']
@@ -100,7 +98,7 @@ def viewSearch(request):
                 posts.append(post)
 
     # Passing an array so the if will need to use |length than count
-    return render(request, 'blog/view/search-results.html', {'posts': posts, 'search': search, })
+    return render(request, 'blog/view/search-results.html', {'posts': posts, 'liked_posts': liked_posts, 'search': search, })
 
 
 def search_titles(request):

@@ -7,15 +7,15 @@
     <meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" href="../../../static/blog/css/bootstrap.css"/>
-	<link rel="stylesheet" href="../../../static/blog/css/post.css"/>
+    <link rel="stylesheet" href="../../../../static/blog/css/bootstrap.css"/>
+	<link rel="stylesheet" href="../../../../static/blog/css/post.css"/>
 	
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://cdn.lightwidget.com/widgets/lightwidget.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="../../../static/blog/js/ajax.js"></script>
+	<script src="../../../../static/blog/js/ajax.js"></script>
 </head>
 <style>
 #navigation-bar{
@@ -28,6 +28,16 @@
 	height: 64px;
 }
 
+
+@media (max-width: 762px){
+	#comments{
+		margin-top: 3em !important;
+	}
+	
+	.comment{
+		margin-top: 1.5em !important;
+	}
+}
 </style>
 <body>
 <!--Start Website Background-->
@@ -44,9 +54,9 @@
 			{% if rec_post.title == post.title %}	
 				<li style="width: 33.33% !important; height: 38px" class="float-left">
 					{% if forloop.first %}
-						<a href="/post/{{posts|last_element}}" alt="Next Post">
+						<a href="/post/{{post.get_year}}/{{post.get_month}}/{{posts|last_element}}/" alt="Next Post">
 					{% else %}
-						<a href="/post/{{posts|previous:forloop.counter0}}" alt="Previous Post">
+						<a href="/post/{{post.get_year}}/{{post.get_month}}/{{posts|previous:forloop.counter0}}/" alt="Previous Post">
 					{% endif %}
 						<button type="button" class="w-100 btn btn-outline-danger" style="border-radius: 0">Previous</button>
 					</a>
@@ -58,9 +68,9 @@
 				</li>
 				<li style="width: 33.33% !important; height: 38px" class="float-left">
 					{% if forloop.last %}
-						<a href="/post/{{posts.0}}" alt="Next Post">
+						<a href="/post/{{post.get_year}}/{{post.get_month}}/{{posts.0}}/" alt="Next Post">
 					{% else %}
-						<a href="/post/{{posts|next:forloop.counter0}}" alt="Next Post">
+						<a href="/post/{{post.get_year}}/{{post.get_month}}/{{posts|next:forloop.counter0}}/" alt="Next Post">
 					{% endif %}
 						<button type="button" class="w-100 btn btn-outline-danger" style="border-radius: 0">Next</button>
 					</a>
@@ -79,7 +89,7 @@
             <div class="col-md-9">
 				<div id="post-info" class="shadow p-3 mb-5 bg-white rounded">
 					<p class="text-left font-weight-bold mt-4" style="font-size: 35px">{{ post.title }}</p>
-					<p class="text-left"><a href="/author/{{ post.author }}/#posts-view" class="text-info"><strong>{{ post.author }}</strong></a>, {{ post.get_full_date }}</p>	
+					<p class="text-left"><a href="/author/{{ post.author }}/#posts-view" class="text-info" name="Link"><strong>{{ post.author }}</strong></a>, {{ post.get_full_date }}</p>	
 					<div class="mt-3">
 						{% for category in post.get_categories %}
 							<a href="/category/{{category}}/#posts-view" class="btn btn-outline-dark mt-2">{{category}}</a>
@@ -102,7 +112,7 @@
 					{% endif %}
 					<!--End Comments Count-->				
 					<!--Start Comments Form-->
-					<form action="{{post.title}}#comments" method="post">
+					<form action="/post/{{post.get_year}}/{{post.get_month}}/{{post.title}}/#comments" method="post">
 					{% csrf_token %}
 						<div class="form-row">
 							{% if reply_comment %}
@@ -132,7 +142,7 @@
 				</div>
 				{% for comment in comments %}
 					{% if comment.reply_id < 0 %}
-						<div class="shadow p-3 mb-5 bg-white rounded">
+						<div class="comment shadow p-3 mb-5 bg-white rounded">
 							<h3 style="overflow: hidden">{{comment.username}}</h3>
 							<h6>{{comment.get_full_date}} <a href="?replyTo={{comment.id}}#comments" class="text-info">Reply</a></h6>
 							<p>{{comment.message|safe}}</p>
@@ -140,7 +150,7 @@
 						<hr>
 							{% for reply_comment in comments %}
 								{% if reply_comment.reply_id == comment.id %}
-									<div class="shadow p-3 mb-5 bg-white rounded ml-5">
+									<div class="comment shadow p-3 mb-5 bg-white rounded ml-5">
 										<h3 style="overflow: hidden">{{reply_comment.username}}</h3>
 										<h6>{{reply_comment.get_full_date}}</h6>
 										<p>{{reply_comment.message|safe}}</p>
@@ -155,53 +165,56 @@
             <!--Start Hierarchy-->
             <div class="col-md-3">
 				<div class="row mt-5">
-					<h2 style="margin-left: 10px;">Share Post</h2>
-					<ul class="" style="list-style-type: none;">
-						<li style="display: inline" class="float-left">
+					<h2 style="margin-left: 10px" class="w-100">Share Post</h2>
+					<ul id="share-buttons" class="w-100" style="list-style-type: none; text-align: center;">
+						<!--Image Variable Location-->
+						{% with image_loc="../../../../static/blog/images/social/share/" %}
+						<li style="display: inline-block" class="share">
 							<a href="{{ post.get_facebook_share }}" alt="Facebook" target="_blank"><img width="38px" 
-							src="../../../static/blog/images/social/share/facebook-display.png" 
-							onmouseover="this.src='../../../static/blog/images/social/share/facebook-hover.png'" 
-							onmouseout="this.src='../../../static/blog/images/social/share/facebook-display.png'" title="Facebook"/></a>     
+							src="{{ image_loc }}facebook-display.png" 
+							onmouseover="this.src='{{ image_loc }}facebook-hover.png'" 
+							onmouseout="this.src='{{ image_loc }}facebook-display.png'" title="Facebook"/></a>     
 						</li>
-						<li style="display: inline" class="float-left ml-0">
+						<li style="display: inline-block" class="share ml-0">
 							<a href="{{ post.get_twitter_share }}" alt="Twitter" target="_blank"><img width="38px" 
-							src="../../../static/blog/images/social/share/twitter-display.png"
-							onmouseover="this.src='../../../static/blog/images/social/share/twitter-hover.png'" 
-							onmouseout="this.src='../../../static/blog/images/social/share/twitter-display.png'" title="Twitter"/></a>
+							src="{{ image_loc }}twitter-display.png"
+							onmouseover="this.src='{{ image_loc }}twitter-hover.png'" 
+							onmouseout="this.src='{{ image_loc }}twitter-display.png'" title="Twitter"/></a>
 						</li>
-						<li style="display: inline" class="float-left ml-0">
+						<li style="display: inline-block" class="share ml-0">
 							<a href="{{ post.get_linkedin_share }}" alt="LinkedIn" target="_blank"><img width="38px" 
-							src="../../../static/blog/images/social/share/linkedin-display.png"
-							onmouseover="this.src='../../../static/blog/images/social/share/linkedin-hover.png'" 
-							onmouseout="this.src='../../../static/blog/images/social/share/linkedin-display.png'" title="LinkedIn"/></a>
+							src="{{ image_loc }}linkedin-display.png"
+							onmouseover="this.src='{{ image_loc }}linkedin-hover.png'" 
+							onmouseout="this.src='{{ image_loc }}linkedin-display.png'" title="LinkedIn"/></a>
 						</li>
-						<li style="display: inline" class="float-left ml-0">
+						<li style="display: inline-block" class="share ml-0">
 							<a href="{{ post.get_googlep_share }}" alt="Instagram" target="_blank"><img width="38px" 
-							src="../../../static/blog/images/social/share/googlep-display.png"
-							onmouseover="this.src='../../../static/blog/images/social/share/googlep-hover.png'" 
-							onmouseout="this.src='../../../static/blog/images/social/share/googlep-display.png'" title="GooglePlus"/></a>
+							src="{{ image_loc }}googlep-display.png"
+							onmouseover="this.src='{{ image_loc }}googlep-hover.png'" 
+							onmouseout="this.src='{{ image_loc }}googlep-display.png'" title="GooglePlus"/></a>
 						</li>
-						<li style="display: inline" class="float-left ml-0">
+						<li style="display: inline-block" class="share ml-0">
 							<a href="{{ post.get_tumblr_share }}" alt="Instagram" target="_blank"><img width="38px" 
-							src="../../../static/blog/images/social/share/tumblr-display.png"
-							onmouseover="this.src='../../../static/blog/images/social/share/tumblr-hover.png'" 
-							onmouseout="this.src='../../../static/blog/images/social/share/tumblr-display.png'" title="Tumblr"/></a>
+							src="{{ image_loc }}tumblr-display.png"
+							onmouseover="this.src='{{ image_loc }}tumblr-hover.png'" 
+							onmouseout="this.src='{{ image_loc }}tumblr-display.png'" title="Tumblr"/></a>
 						</li>
-						<li style="display: inline" class="float-left ml-0">
+						<li style="display: inline-block" class="share ml-0">
 							<a href="{{ post.get_pinterest_share }}" alt="Instagram" target="_blank"><img width="38px" 
-							src="../../../static/blog/images/social/share/pinterest-display.png"
-							onmouseover="this.src='../../../static/blog/images/social/share/pinterest-hover.png'" 
-							onmouseout="this.src='../../../static/blog/images/social/share/pinterest-display.png'" title="Pinterest"/></a>
+							src="{{ image_loc }}pinterest-display.png"
+							onmouseover="this.src='{{ image_loc }}pinterest-hover.png'" 
+							onmouseout="this.src='{{ image_loc }}pinterest-display.png'" title="Pinterest"/></a>
 						</li>
+						{% endwith %}
 					</ul>
 				</div>
 				<div class="row">
-					<h2 style="margin-left: 10px;">Recent Posts</h2>
-					<ul style="list-style-type: none; margin-left: -15px;">
+					<h2 style="margin-left: 10px" class="w-100">Recent Posts</h2>
+					<ul style="list-style-type: none" class="ml-4">
 						{% for rec_post in posts %}
 							{% if rec_post.title != post.title %}
-								<li>
-									<a href="{{ rec_post.title }}" alt="{{ rec_post.title }}" class="text-info">
+								<li style="width: 96%;">
+									<a href="/post/{{post.get_year}}/{{post.get_month}}/{{ rec_post.title }}/" alt="{{ rec_post.title }}" class="text-info" name="Link">
 										<strong>
 											<span style="overflow: hidden">{{ rec_post.title }}</span>
 										</strong>
@@ -211,7 +224,6 @@
 							{% endif %}
 						{% endfor %}
 					</ul>
-				</div>
 			</div>
 			<!--End Hierarchy-->
         </div>

@@ -10,10 +10,10 @@
 		{% endif %}
 			{% for like_p in liked_posts %}
 				{% if forloop.counter == 1 %}
-					<a href="post/{{ like_p.title }}" alt="Most Recent Post">
+					<a href="post/{{ like_p.get_year }}/{{ like_p.get_month }}/{{ like_p.title }}/" alt="Most Recent Post">
 						<div class="d-flex align-items-baseline">
 							<div class="card bg-dark text-white border-success">
-								<img class="card-img" src="{{ like_p.get_banner_url }}" alt="Card image">
+								<img class="card-img" src="/{{ like_p.get_banner_url }}" alt="Card image">
 								<div class="card-img-overlay my-4 recent" name="First">
 									<h5 class="card-title">{{ like_p.title }}</h5>
 									<small class="card-text text-light float-right" style="margin-top: 0px">
@@ -39,10 +39,10 @@
 			<div class="row">
 				{% for like_p in liked_posts %}
 					{% if forloop.counter == 2 %}
-						<a href="post/{{ like_p.title }}" alt="Most Recent Post">
+						<a href="post/{{ like_p.get_year }}/{{ like_p.get_month }}/{{ like_p.title }}/" alt="Most Recent Post">
 							<div class="col my-2" style="z-index: -99 !important">
 								<div class="card bg-dark text-white border-info">
-									<img class="card-img" src="{{ like_p.get_banner_url }}" alt="Card image">
+									<img class="card-img" src="/{{ like_p.get_banner_url }}" alt="Card image">
 									<div class="card-img-overlay my-4 recent" name="Second">
 										<h5 class="card-title">{{ like_p.get_short_title }}</h5>
 										<small class="card-text text-light float-right" style="margin-top: 0px">
@@ -63,10 +63,10 @@
 			<div class="row">
 				{% for like_p in liked_posts %}
 					{% if forloop.counter == 3 %}			
-						<a href="post/{{ like_p.title }}" alt="Most Recent Post">
+						<a href="post/{{ like_p.get_year }}/{{ like_p.get_month }}/{{ like_p.title }}/" alt="Most Recent Post">
 							<div class="col my-2" style="z-index: -99 !important">
 								<div class="card bg-dark text-white border-danger">
-									<img class="card-img" src="{{ like_p.get_banner_url }}" alt="Card image">
+									<img class="card-img" src="/{{ like_p.get_banner_url }}" alt="Card image">
 									<div class="card-img-overlay my-4 recent" name="Third">
 										<h5 class="card-title">{{ like_p.get_short_title }}</h5>
 										<small class="text-light float-right" style="margin-top: 0px">

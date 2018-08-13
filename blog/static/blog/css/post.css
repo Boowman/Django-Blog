@@ -20,6 +20,24 @@ body {
     z-index: -99;
 }
 
+a[name=Link] {
+	text-decoration: none;
+	
+	-webkit-box-shadow: 0px 0px #17a2b8 !important;
+	-moz-box-shadow:    0px 0px #17a2b8 !important;
+	box-shadow:         0px 0px #17a2b8 !important;
+
+	transition: -webkit-box-shadow 	0.2s linear;
+	transition: -moz-box-shadow 	0.2s linear;
+	transition: box-shadow 			0.2s linear;
+}
+
+a[name=Link]:hover {
+	-webkit-box-shadow: 0px 5px #17a2b8 !important;
+	-moz-box-shadow:    0px 5px #17a2b8 !important;
+	box-shadow:         0px 5px #17a2b8 !important;
+}
+
 #top-view{
     height: 75vh;
 }
@@ -39,10 +57,18 @@ body {
 
 @media screen and (max-width:768px){
     .navbar-toggler{
-        margin-top: -105px;
-        margin-left: -15px;
+        margin-top: -97px;
+        margin-left: 0px;
     }
-	
+
+    .title{
+        font-size: 40px !important;
+    }
+
+    .title-container{
+        text-align: right !important;
+    }
+
 	.header-logo{
 		width: 64px;
 		height: 64px;
@@ -56,39 +82,38 @@ body {
     }
 }
 
+@media (min-width: 768px) {
+	.form-inline input{
+		margin-right: 0.5rem !important;
+	}
+	
+	.form-inline button{
+		margin-right: 1.1rem !important;
+	}
+	
+	.title-container{
+		margin: 0;
+		margin-bottom: -100px;
+	}
+	
+	#header{
+		margin-bottom: 10vh;
+	}
+}
+
+@media (max-width: 760px) {
+	.mb-5{
+		margin-bottom: 0rem !important;
+	}
+	
+	.my-5{
+		margin-bottom: 0rem !important;
+	}
+}
+
 @media screen and (max-width:450px){
     .navbar-toggler{
         margin-top: -95px;
-        margin-left: 0px;
-    }
-
-    .title{
-        font-size: 40px !important;
-    }
-
-    .title-container{
-        text-align: right !important;
-    }
-}
-
-@media screen and (max-width:350px){
-    .navbar-toggler{
-        margin-top: -80px;
-        margin-left: 0px;
-    }
-
-    .title{
-        font-size: 30px !important;
-    }
-
-    .title-container{
-        text-align: right !important;
-    }
-}
-
-@media screen and (max-width:768px){
-    .navbar-toggler{
-        margin-top: -97px;
         margin-left: 0px;
     }
 
@@ -124,31 +149,17 @@ body {
 	}
 }
 
-@media (min-width: 768px) {
-	.form-inline input{
-		margin-right: 0.5rem !important;
-	}
-	
-	.form-inline button{
-		margin-right: 1.1rem !important;
-	}
-	
-	.title-container{
-		margin: 0;
-		margin-bottom: -100px;
-	}
-	
-	#header{
-		margin-bottom: 10vh;
-	}
-}
+@media screen and (max-width:350px){
+    .navbar-toggler{
+        margin-top: -80px;
+        margin-left: 0px;
+    }
 
-@media (max-width: 760px) {
-	.mb-5{
-		margin-bottom: 0rem !important;
-	}
-	
-	.my-5{
-		margin-bottom: 0rem !important;
-	}
+    .title{
+        font-size: 30px !important;
+    }
+
+    .title-container{
+        text-align: right !important;
+    }
 }

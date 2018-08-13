@@ -15,6 +15,10 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    """
+        Get any informations about the post to display
+        pn the webpage.
+    """
     def get_short_title(self):
         return self.title[0:26]
 
@@ -42,10 +46,18 @@ class Post(models.Model):
     def get_comments_count(self):
         return self.comments
 
+    """
+        Updated post variables
+    """
     def update_likes(self, value):
         self.likes += value
         return True
 
+    """
+        Below is the code for the share buttons which will redirect to 
+        the appropriate page, it includes
+        Facebook, Twitter, LinkedIn, GooglePlus, Tumblr and Pinterest
+    """
     url = "boowman.pythonanywhere.com"
 
     def get_facebook_share(self):
@@ -71,6 +83,15 @@ class Post(models.Model):
     def get_pinterest_share(self):
         shareTitle = self.title.replace(' ', '%2520')
         return "http://pinterest.com/pin/create/button/?url=http%3A%2F%2F" + self.url + "%2Fpost%2F" + shareTitle + "&media=&description=Found something awesome!!"
+
+    """
+        To get the right post url we are using the year and month
+    """
+    def get_year(self):
+        return self.date.strftime("%Y")
+
+    def get_month(self):
+        return self.date.strftime("%b")
 
 
 class Comment(models.Model):

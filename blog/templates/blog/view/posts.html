@@ -26,7 +26,7 @@ $(function () {
 		{% include "../include/header.html" %}
     <!--End Header-->
     <!--Start Most Recent-->
-		{% include "../include/index/most-popular.html" %}
+		{% include "../include/most-popular.html" %}
     <!--End Most Recent-->
 </div>
 <!--End Website Header and Most Recent-->
@@ -62,17 +62,17 @@ $(function () {
 							<div class="card-deck mt-5">
 							{% endif %}
 								<div class="card" id="{{ post.title }}">
-									<a href="post/{{ post.title }}" title="{{ post.title }}" name="PostHeader">
+									<a href="post/{{post.get_year}}/{{post.get_month}}/{{post.title}}/" title="{{ post.title }}" name="PostHeader">
 										<img class="card-img-top post-image" src="http://{{ request.get_host }}/{{ post.get_banner_url }}" alt="Card image cap">				
 									</a>
 									<div class="card-body">
-										<h5 class="card-title">{{ post.title }}</h5>
+										<h5 class="card-title">{{ post.title }} - {{post.get_year}} - {{post.get_month}}</h5>
 										<p class="card-text">{{ post.headerTitle|safe }}</p>
 									</div>               
 									<blockquote class="blockquote mb-0 card-body align-bottom" style="vertical-align: bottom;">
 										<footer class="blockquote-footer">
 											<small class="text-muted">
-												Posted by <cite title="Source Title"><a href="/author/{{ post.author }}/#posts-view" class="text-info ">{{ post.author }}</a></cite>
+												Posted by <cite title="Source Title"><a href="/author/{{ post.author }}/#posts-view" class="text-info" name="Link">{{ post.author }}</a></cite>
 											</small>
 										</footer>
 									</blockquote>         

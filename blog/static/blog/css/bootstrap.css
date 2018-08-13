@@ -107,8 +107,9 @@ address {
 ol,
 ul,
 dl {
-  margin-top: 0;
-  margin-bottom: 1rem;
+	padding: 0;
+	margin-top: 0;
+	margin-bottom: 1rem;
 }
 
 ol ol,
@@ -167,6 +168,12 @@ a {
   -webkit-text-decoration-skip: objects;
 }
 
+a[name=Link] {
+  color: #17a2b8 !important;
+  text-decoration: none;
+  background-color: transparent;
+  -webkit-text-decoration-skip: objects;
+}
 a:hover {
   color: #0056b3;
   text-decoration: underline;
