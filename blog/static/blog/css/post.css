@@ -163,3 +163,25 @@ a[name=Link]:hover {
         text-align: right !important;
     }
 }
+
+@media (max-width: 420px) and (max-height: 826px){
+	.header-logo{
+		width: 64px;
+		height: 64px;
+	}
+	
+	.navbar-collapse {
+		margin-bottom: 0px;
+	}
+	
+    .dropup,
+    .dropright,
+    .dropdown,
+    .dropleft {
+	    width: 100%;
+    }
+	
+	#search-results{
+		width: 100%;
+	}
+}
